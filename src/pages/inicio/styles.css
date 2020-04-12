@@ -93,3 +93,19 @@
 
 }
 
+.date-align{
+    text-align: right;
+}
+
+.select{
+    font: 200 13px Anton, sans-serif;
+    width: 100%;
+    position: relative;
+    border: #41414d;
+}
+
+.select option{
+    font: 200 13px Anton, sans-serif;
+  
+}
+
