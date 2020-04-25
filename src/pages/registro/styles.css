@@ -14,7 +14,8 @@
     padding: 96px;
     background: #f0f5f5;
     box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    
+    border-radius: 15px;
 
     display: flex;
     justify-content: space-between;
@@ -38,12 +39,33 @@
     text-align: justify;
 }
 
-.register-container .content form {
+.register-container .content form  {
     width: 100%;
     max-width: 450px;
 }
 
-.register-container .content form input {
+.register-container .content select {
+    width: 110%;
+    max-width: 450px;
+    margin-top: 8px;
+
+    width: 100%;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 0 100px rgba(99, 92, 0, 0.1);
+    border: 1px solid #dcdc36;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-container .content select option{
+    font-size: 15px; 
+    
+}
+
+.register-container .content form input  {
     margin-top: 8px;
 }
 
@@ -53,4 +75,9 @@
 
 .register-container .content form .input-group input + input {
     margin-left: 8px;
+}
+
+.img-cadastro{
+    width: 500px;
+    margin-top: -100px;
 }
