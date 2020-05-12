@@ -1,72 +1,52 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import { FiPower, FiCalendar, FiXCircle } from 'react-icons/fi'
 
 import './styles.css';
 import logo from '../../images/logo.png';
 
+import api from '../../services/api'
+
 export default function Inicio() {
+    const [avisos, setAvisos] = useState([]);
+    const nome = localStorage.getItem('professorNome')
+    const id = localStorage.getItem('professorId')
+    const history = useHistory();
+    
+    useEffect(()=>{
+        api.get('perfil', {
+            headers: {
+                Authorization:  id,
+            }
+        }).then(response=>{
+            setAvisos(response.data)
+        })
+    }, [id])
+
+    function handleLogout(){
+        localStorage.clear();
+        history.push('/');
+    }
     return (
         <div className="inicio-container">
             <header>
                 <img src={logo} alt="Mural Escolar"></img>
-                <span>Bem-vindo, Professor(a) Maria!</span>
-                <Link className="button-add">Cadastrar Informações</Link>
-                <button><FiPower size={18} color="#E02041" /></button>
+                <span>Bem-vindo, Professor(a) {nome}!</span>
+                <Link to="/avisos/novo" className="button-add">Cadastrar Informações</Link>
+                <button onClick={handleLogout} ><FiPower size={18} color="#E02041" /></button>
             </header>
             <h1>Mural de Informações</h1>
             <ul>
-                <li>
-                    <strong>Titulo</strong>
+                {avisos.map(aviso => (
+                    <li key={aviso.id}>
+                        <strong>{aviso.titulo}</strong>
 
-                    <p>Mussum Ipsum, cacilds vidis litro abertis.
-                        Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
-                        Diuretics paradis num copo é motivis de denguis.
-                        Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                        Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!</p>
-                    <strong className="date-align">Data: 07/04/2020</strong>
-                    <button><FiXCircle size={20} color="#FF0000"></FiXCircle></button>
-                </li>
-                <li>
-                    <strong>Titulo</strong>
-
-                    <p>Mussum Ipsum, cacilds vidis litro abertis.
-                        Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
-                        Diuretics paradis num copo é motivis de denguis.
-                        Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                        Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!</p>
-                    <strong className="date-align">Data: 07/04/2020</strong>
-                </li>
-                <li>
-                    <strong>Titulo</strong>
-
-                    <p>Mussum Ipsum, cacilds vidis litro abertis.
-                        Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
-                        Diuretics paradis num copo é motivis de denguis.
-                        Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                        Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!</p>
-                    <strong className="date-align">Data: 07/04/2020</strong>
-                </li>
-                <li>
-                    <strong>Titulo</strong>
-
-                    <p>Mussum Ipsum, cacilds vidis litro abertis.
-                        Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
-                        Diuretics paradis num copo é motivis de denguis.
-                        Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                        Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!</p>
-                </li>
-
-                <li>
-                    <strong>Titulo</strong>
-
-                    <p>Mussum Ipsum, cacilds vidis litro abertis.
-                        Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
-                        Diuretics paradis num copo é motivis de denguis.
-                        Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                        Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!</p>
-                </li>
+                        <p>{aviso.descricao}</p>
+                        <strong className="date-align">Data: {aviso.data}</strong>
+                        <button><FiXCircle size={20} color="#FF0000"></FiXCircle></button>
+                    </li>
+                ))}
             </ul>
             <br />
             <footer>
