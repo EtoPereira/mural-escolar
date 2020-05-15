@@ -11,22 +11,35 @@ import api from '../../services/api'
 export default function Inicio() {
     const [avisos, setAvisos] = useState([]);
     const nome = localStorage.getItem('professorNome')
-    const id = localStorage.getItem('professorId')
+    const professorId = localStorage.getItem('professorId')
     const history = useHistory();
     
     useEffect(()=>{
         api.get('perfil', {
             headers: {
-                Authorization:  id,
+                Authorization:  professorId,
             }
         }).then(response=>{
             setAvisos(response.data)
         })
-    }, [id])
+    }, [professorId])
 
     function handleLogout(){
         localStorage.clear();
         history.push('/');
+    }
+
+    async function handleDeleteAviso(id){
+        try{
+            await api.delete(`publicacoes/${id}`, {
+                headers: {
+                    Authorization: professorId,
+                }
+            });
+            setAvisos(avisos.filter(aviso=>aviso.id !== id))
+        }catch(error){
+            alert('Erro ao deletar o aviso, tente novamente.')
+        }
     }
     return (
         <div className="inicio-container">
@@ -39,12 +52,12 @@ export default function Inicio() {
             <h1>Mural de Informações</h1>
             <ul>
                 {avisos.map(aviso => (
-                    <li key={aviso.id}>
+                    <li key={aviso.professorId}>
                         <strong>{aviso.titulo}</strong>
 
                         <p>{aviso.descricao}</p>
                         <strong className="date-align">Data: {aviso.data}</strong>
-                        <button><FiXCircle size={20} color="#FF0000"></FiXCircle></button>
+                        <button onClick={()=>handleDeleteAviso(aviso.id)} type="submit"><FiXCircle size={20} color="#FF0000"></FiXCircle></button>
                     </li>
                 ))}
             </ul>
