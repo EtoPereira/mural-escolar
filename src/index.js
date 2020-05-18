@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
+
+import 'react-notifications/lib/notifications.css';
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    <NotificationContainer />
   </React.StrictMode>,
   document.getElementById('root')
 );

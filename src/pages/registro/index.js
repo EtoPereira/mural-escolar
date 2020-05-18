@@ -1,38 +1,50 @@
-import React, {useState} from 'react';
-import {Link, useHistory} from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom'
 
-import {FiLogIn} from 'react-icons/fi'
+import { FiLogIn } from 'react-icons/fi'
 import './styles.css';
 
 import api from '../../services/api';
 
-
 import professor from '../../images/professor.png'
 
+import Notification from '../../components/Notification/index'
+
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
+
 export default function Registro() {
+    const [isModalVisible, setIsModalVisible] = useState(false)
+
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
     const history = useHistory();
 
-    async function handleRegistro(e){
+
+    async function handleRegistro(e) {
+
         e.preventDefault();
-        
+
         const data = {
             nome,
             email,
             senha
         };
 
-        try{
-            const response = await api.post('professores', data);
+        try {
 
-            alert(`Seu ID de acesso: ${response.data.id}`)
+        const response = await api.post('professores', data);  
+
+            NotificationManager.success('Sucesso', `O ID de acesso é ${response.data.id}`);
             history.push('/');
-        }catch(error){
-            alert("Erro no cadastro. Tente novamente", error);
+
+            // alert(`Seu ID de acesso: ${response.data.id}`)
+            } catch (error) {
+            NotificationManager.error('Houve um problema, tente novamente');
         }
+        // }
     }
 
 
@@ -45,16 +57,14 @@ export default function Registro() {
                     <p>Faça seu cadastro professor, e comece a publicar informações sobre as aulas e datas de avaliações</p>
                 </section>
                 <form onSubmit={handleRegistro}>
-                    <select>
-                        <option>Professor</option>
-                        <option>Pai/Mãe</option>
-                    </select>
-                    <input value={nome} onChange={e=> setNome(e.target.value)} placeholder="Nome"></input>
-                    <input value={email} onChange={e=> setEmail(e.target.value)} placeholder="E-mail"></input>
-                    <input value={senha} onChange={e=> setSenha(e.target.value)} placeholder="Senha"></input>
+                    <input value={nome} onChange={e => setNome(e.target.value)} placeholder="Nome"></input>
+                    <input value={email} onChange={e => setEmail(e.target.value)} placeholder="E-mail"></input>
+                    <input value={senha} onChange={e => setSenha(e.target.value)} placeholder="Senha"></input>
 
                     <button className="button-add" type="submit">Realizar Cadastro</button>
-                    <Link className="back-link" to="/"><FiLogIn size={16} color="#ff0000"/>Já tenho cadastro</Link>
+
+
+                    <Link className="back-link" to="/"><FiLogIn size={16} color="#ff0000" />Já tenho cadastro</Link>
                 </form>
             </div>
 

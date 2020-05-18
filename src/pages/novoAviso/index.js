@@ -46,7 +46,7 @@ export default function NovoAviso() {
                 <img className="img-novo" src={imagemNovo} alt="Be The Hero" />
                 <h1>Cadastrar novo aviso</h1>
                 <p>Descreva o aviso detalhadamente para informar os pais dos alunos.</p>
-                 <Link className="back-link" to="/profile">
+                 <Link className="back-link" to="/perfil">
                     <FiArrowLeft size={16} color="#E02041" /> 
                     Voltar ao início
                 </Link> 

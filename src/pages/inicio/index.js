@@ -9,6 +9,7 @@ import logo from '../../images/logo.png';
 import api from '../../services/api'
 
 export default function Inicio() {
+
     const [avisos, setAvisos] = useState([]);
     const nome = localStorage.getItem('professorNome')
     const professorId = localStorage.getItem('professorId')

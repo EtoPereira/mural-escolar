@@ -11,7 +11,6 @@ import LoginImagem from '../../images/login.jpg'
 import api from '../../services/api';
 
 export default function Login() {
-
     const [id, setId] = useState('');
     const [senha, setSenha] = useState('');
     const history = useHistory();
@@ -46,7 +45,7 @@ export default function Login() {
                 </form>
             </section>
             <img className="img" src={LoginImagem}></img>
-
+        <form action=""></form>
         </div>
     );
 
